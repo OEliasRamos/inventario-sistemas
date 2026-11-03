@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inventário dos Sistemas — Up Estágio</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Mermaid.js for diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true, theme: 'neutral' });
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-blue-500/20">
+          UP
+        </div>
+        <div>
+          <h1 class="font-bold text-lg text-slate-900 leading-tight">Inventário de Sistemas</h1>
+          <p class="text-xs text-slate-500">Up Estágio — Projeto Start BSB (Eixo III)</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="window.location.reload()" class="px-3.5 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-100 hover:bg-emerald-200 rounded-lg transition-colors flex items-center gap-1.5 border border-emerald-300 shadow-sm active:scale-95">
+          <i class="fa-solid fa-arrows-rotate text-emerald-600"></i> Recarregar
+        </button>
+        <a href="quadro-inventario-miro.html" class="px-3.5 py-1.5 text-xs font-semibold text-amber-900 bg-amber-100 hover:bg-amber-200 rounded-lg transition-colors flex items-center gap-1.5 border border-amber-300">
+          <i class="fa-solid fa-shapes"></i> Abrir no Modo Miro
+        </a>
+        <button onclick="window.print()" class="px-3 py-1.5 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-lg transition-colors flex items-center gap-1.5 border border-slate-200">
+          <i class="fa-solid fa-print"></i> Imprimir / PDF
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Navigation Tabs -->
+  <div class="bg-white border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex gap-6">
+      <button onclick="switchTab('dashboard')" id="tab-dashboard" class="py-3 px-1 border-b-2 border-blue-600 text-blue-600 font-semibold text-sm flex items-center gap-2">
+        <i class="fa-solid fa-chart-pie"></i> Visão Geral & Fluxo
+      </button>
+      <button onclick="switchTab('sistemas')" id="tab-sistemas" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-medium text-sm flex items-center gap-2">
+        <i class="fa-solid fa-cubes"></i> Fichas dos Sistemas (2)
+      </button>
+      <button onclick="switchTab('pendencias')" id="tab-pendencias" class="py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-medium text-sm flex items-center gap-2">
+        <i class="fa-solid fa-clipboard-question"></i> Dúvidas & Pendências (5)
+      </button>
+    </div>
+  </div>
+
+  <!-- Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- TAB 1: DASHBOARD -->
+    <div id="content-dashboard" class="space-y-8">
+      
+      <!-- Metrics Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between text-slate-500 text-sm mb-2">
+            <span>Sistemas Identificados</span>
+            <i class="fa-solid fa-layer-group text-blue-600"></i>
+          </div>
+          <div class="text-3xl font-bold text-slate-900">2</div>
+          <div class="text-xs text-slate-500 mt-1">Sistemas reais em análise</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between text-slate-500 text-sm mb-2">
+            <span>Fichas em Elaboração</span>
+            <i class="fa-solid fa-pen-ruler text-amber-500"></i>
+          </div>
+          <div class="text-3xl font-bold text-slate-900">2</div>
+          <div class="text-xs text-amber-600 font-medium mt-1">Sistema Vagas 3.0 & Banco</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between text-slate-500 text-sm mb-2">
+            <span>Dúvidas Técnicas</span>
+            <i class="fa-solid fa-circle-question text-blue-500"></i>
+          </div>
+          <div class="text-3xl font-bold text-slate-900">5</div>
+          <div class="text-xs text-blue-600 font-medium mt-1">Para alinhamento com Elias</div>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm">
+          <div class="flex items-center justify-between text-slate-500 text-sm mb-2">
+            <span>Etapa Atual</span>
+            <i class="fa-solid fa-flag-checkered text-emerald-600"></i>
+          </div>
+          <div class="text-xl font-bold text-emerald-600">AppSheet RH</div>
+          <div class="text-xs text-slate-500 mt-1">Fase 1 do inventário</div>
+        </div>
+      </div>
+
+      <!-- Tabela Geral de Sistemas -->
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between bg-slate-50/50">
+          <div>
+            <h2 class="font-bold text-slate-900 text-base">Mapa Oficial dos Sistemas</h2>
+            <p class="text-xs text-slate-500">Ferramentas em uso na operação da Up Estágio</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+              <tr>
+                <th class="px-6 py-3.5">Sistema</th>
+                <th class="px-6 py-3.5">Tipo</th>
+                <th class="px-6 py-3.5">Etapa Atendida</th>
+                <th class="px-6 py-3.5">Status Inventário</th>
+                <th class="px-6 py-3.5">Status Uso</th>
+                <th class="px-6 py-3.5 text-right">Ação</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr class="hover:bg-slate-50/80 transition-colors">
+                <td class="px-6 py-4 font-semibold text-slate-900">
+                  Sistema Vagas 3.0
+                  <span class="block text-xs font-normal text-slate-500">Kanban, Diário do RH, Inadimplência e Contratações</span>
+                </td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 rounded-md text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">AppSheet</span></td>
+                <td class="px-6 py-4 text-slate-600">Triagem & Processo Seletivo</td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Em elaboração
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-emerald-600 font-medium text-xs">Em uso diário</td>
+                <td class="px-6 py-4 text-right">
+                  <button onclick="showSystem('sistema-vagas-3')" class="text-blue-600 hover:text-blue-800 font-semibold text-xs inline-flex items-center gap-1">Ver Ficha <i class="fa-solid fa-arrow-right"></i></button>
+                </td>
+              </tr>
+              <tr class="hover:bg-slate-50/80 transition-colors">
+                <td class="px-6 py-4 font-semibold text-slate-900">
+                  BANCO DE CURRÍCULOS Up Estágio
+                  <span class="block text-xs font-normal text-slate-500">Repositório de candidatos, Drive, Alerta IES e IA Sheets</span>
+                </td>
+                <td class="px-6 py-4"><span class="px-2.5 py-1 rounded-md text-xs font-medium bg-blue-50 text-blue-700 border border-blue-200">AppSheet</span></td>
+                <td class="px-6 py-4 text-slate-600">Captação & Banco de Talentos</td>
+                <td class="px-6 py-4">
+                  <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+                    <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span> Em elaboração
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-emerald-600 font-medium text-xs">Em uso diário</td>
+                <td class="px-6 py-4 text-right">
+                  <button onclick="showSystem('banco-de-curriculos')" class="text-blue-600 hover:text-blue-800 font-semibold text-xs inline-flex items-center gap-1">Ver Ficha <i class="fa-solid fa-arrow-right"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Diagrama de Fluxo Visual Mermaid -->
+      <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+        <div class="mb-4">
+          <h2 class="font-bold text-slate-900 text-base flex items-center gap-2">
+            <i class="fa-solid fa-diagram-project text-indigo-600"></i> Diagrama do Fluxo Atual
+          </h2>
+          <p class="text-xs text-slate-500">Relação entre o Banco de Currículos e o Sistema Vagas 3.0</p>
+        </div>
+        <div class="bg-slate-50 p-6 rounded-xl border border-slate-200 flex justify-center overflow-x-auto">
+          <pre class="mermaid">
+flowchart LR
+    A["Candidatos"] --> B["BANCO DE CURRÍCULOS<br>(AppSheet)"]
+    B <-->|"Visualiza & Anexa"| C[("Google Drive<br>PDFs dos Currículos")]
+    B -.->|"Encaminhamento (a validar ligação)"| D["Sistema Vagas 3.0<br>(AppSheet)"]
+    D --> E["Kanban & Anotações Diárias"]
+    D --> F["Controle de Empresas & Inadimplência"]
+          </pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: FICHAS DOS SISTEMAS -->
+    <div id="content-sistemas" class="hidden space-y-6">
+      <div class="flex gap-3 pb-2 border-b border-slate-200 overflow-x-auto">
+        <button onclick="filterSystemDetail('sistema-vagas-3')" id="btn-sys-vagas" class="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-sm">Sistema Vagas 3.0</button>
+        <button onclick="filterSystemDetail('banco-de-curriculos')" id="btn-sys-banco" class="px-4 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50">Banco de Currículos</button>
+      </div>
+
+      <div id="sys-detail-container" class="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-8">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </div>
+
+    <!-- TAB 3: PENDÊNCIAS -->
+    <div id="content-pendencias" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+        <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h2 class="font-bold text-slate-900 text-base">Dúvidas Técnicas para Esclarecimento</h2>
+            <p class="text-xs text-slate-500">Perguntas geradas a partir da leitura das telas</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-50 text-slate-600 text-xs uppercase font-semibold border-b border-slate-200">
+              <tr>
+                <th class="px-6 py-3.5">ID</th>
+                <th class="px-6 py-3.5">Sistema</th>
+                <th class="px-6 py-3.5">Dúvida / O que falta</th>
+                <th class="px-6 py-3.5">Prioridade</th>
+                <th class="px-6 py-3.5">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              <tr>
+                <td class="px-6 py-4 font-mono text-xs font-bold text-blue-600">PEND-CURR-01</td>
+                <td class="px-6 py-4 font-medium text-slate-900">Banco de Currículos</td>
+                <td class="px-6 py-4 text-slate-600">Como os candidatos entram no Banco de Currículos? (Site, Google Forms ou cadastro manual?)</td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-700">Alta</span></td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700">Aguardando</span></td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-mono text-xs font-bold text-blue-600">PEND-CURR-02</td>
+                <td class="px-6 py-4 font-medium text-slate-900">Banco de Currículos</td>
+                <td class="px-6 py-4 text-slate-600">O que faz a opção <b>"IA Sheets"</b> no menu lateral do app?</td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-700">Alta</span></td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700">Aguardando</span></td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-mono text-xs font-bold text-blue-600">PEND-CURR-03</td>
+                <td class="px-6 py-4 font-medium text-slate-900">Banco de Currículos</td>
+                <td class="px-6 py-4 text-slate-600">O que é a regra de <b>"Alerta IES"</b>? (O que faz um candidato cair nesse alerta?)</td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700">Média</span></td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700">Aguardando</span></td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-mono text-xs font-bold text-blue-600">PEND-VAGAS-01</td>
+                <td class="px-6 py-4 font-medium text-slate-900">Sistema Vagas 3.0</td>
+                <td class="px-6 py-4 text-slate-600">O Vagas 3.0 consulta diretamente o Banco de Currículos ou usa uma base separada?</td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-bold bg-rose-50 text-rose-700">Alta</span></td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700">Aguardando</span></td>
+              </tr>
+              <tr>
+                <td class="px-6 py-4 font-mono text-xs font-bold text-blue-600">PEND-VAGAS-02</td>
+                <td class="px-6 py-4 font-medium text-slate-900">Sistema Vagas 3.0</td>
+                <td class="px-6 py-4 text-slate-600">O controle de inadimplência bloqueia a abertura de vagas ou é só um sinalizador visual?</td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-bold bg-amber-50 text-amber-700">Média</span></td>
+                <td class="px-6 py-4"><span class="px-2 py-0.5 rounded text-[11px] font-medium bg-amber-50 text-amber-700">Aguardando</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500">
+    Inventário dos Sistemas — Up Estágio &bull; Projeto Start BSB (Eixo III)
+  </footer>
+
+  <script>
+    const systemsData = {
+      'sistema-vagas-3': {
+        name: 'Sistema Vagas 3.0',
+        type: 'AppSheet',
+        slug: 'sistema-vagas-3',
+        owner: 'Equipe de RH / Operações',
+        maintainer: 'Mantido internamente pela equipe da Up Estágio',
+        status: 'Em uso',
+        summary: 'Aplicativo central utilizado pelo RH para acompanhar o andamento de todo o processo seletivo, registrar o diário de bordo com anotações diárias do que foi realizado em cada vaga, monitorar metas e acompanhar empresas inadimplentes.',
+        stages: 'Triagem, Processo Seletivo & Gestão de Clientes',
+        users: 'Equipe interna (RH, Atendimento e Recrutamento)',
+        frequency: 'Diária contínua',
+        screens: [
+          'Vagas: Gestão das vagas ativas no mercado.',
+          'Contratações: Controle dos estagiários formalizados.',
+          'Kanban: Quadro visual para movimentação dos processos seletivos.',
+          'Pontuação: Gestão de pontuação por produtividade ou processo.',
+          'Metas & KPIs Kanban: Indicadores de desempenho e acompanhamento de ritmo.',
+          'Contatos: Cadastro de responsáveis nas empresas com cargos e telefones.',
+          'Anotações: Diário de bordo onde o RH registra os comentários do que foi feito no dia.',
+          'Empresas: Cadastro das parceiras e gestão de inadimplência.'
+        ],
+        actions: [
+          'Registro de comentários e notas diárias em cada vaga.',
+          'Sinalização de empresas inadimplentes para a equipe de atendimento.'
+        ],
+        dataRead: 'Planilha Google Sheets vinculada (ID a confirmar).',
+        dataWrite: 'Atualização de status, notas diárias e contratações.',
+        volume: 'A confirmar na planilha.',
+        limitations: [
+          'Necessidade de validação de como os candidatos chegam a este app.'
+        ],
+        startBsb: [
+          'Agentes de IA registrando comentários automáticos após interações no WhatsApp.',
+          'Automação de alertas de inadimplência diretamente integrados ao financeiro.'
+        ]
+      },
+      'banco-de-curriculos': {
+        name: 'BANCO DE CURRÍCULOS Up Estágio',
+        type: 'AppSheet',
+        slug: 'banco-de-curriculos',
+        owner: 'Equipe de RH / Atendimento',
+        maintainer: 'Mantido internamente pela equipe da Up Estágio',
+        status: 'Em uso',
+        summary: 'Repositório onde ficam registrados todos os cadastros dos candidatos que se aplicam às vagas. Permite filtrar por curso, idade, localização, UF, contato e abrir diretamente o currículo PDF arquivado no Google Drive.',
+        stages: 'Captação, Banco de Talentos & Triagem',
+        users: 'Recrutadores e Atendimento',
+        frequency: 'Diária',
+        screens: [
+          'Banco de Currículos: Listagem principal e busca rápida por nome/termo.',
+          'Candidatos em Alerta IES: Filtro com alunos sob alerta institucional.',
+          'Modelos de Emails: Templates para envio de comunicados aos candidatos.',
+          'Logs: Histórico de acessos e modificações.',
+          'IA Sheets: Módulo de inteligência artificial / automações integradas.',
+          'Alerta de IES: Parametrização dos avisos das faculdades.'
+        ],
+        actions: [
+          'Alterar e corrigir dados cadastrais de candidatos.',
+          'Excluir cadastros desatualizados ou duplicados.',
+          'Abrir currículo em PDF diretamente no Google Drive.'
+        ],
+        dataRead: 'Planilha Google Sheets e Pasta de PDFs no Google Drive.',
+        dataWrite: 'Edição, exclusão e inclusão de dados dos candidatos.',
+        volume: 'A confirmar na planilha.',
+        limitations: [
+          'Entrada de novos currículos a ser documentada.'
+        ],
+        startBsb: [
+          'Base principal para o Agente de Busca Semântica por IA no Start BSB.',
+          'Disparo em lote automatizado de mensagens de seleção por WhatsApp.'
+        ]
+      }
+    };
+
+    function renderSystem(key) {
+      const s = systemsData[key];
+      const html = `
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-6 border-b border-slate-100">
+          <div>
+            <div class="flex items-center gap-3">
+              <h2 class="text-2xl font-bold text-slate-900">${s.name}</h2>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">${s.type}</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-1">${s.summary}</p>
+          </div>
+          <div class="text-right flex-shrink-0">
+            <span class="text-xs text-slate-500 block">Responsável</span>
+            <span class="text-xs font-mono font-medium text-slate-800">${s.owner}</span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+            <h4 class="text-xs uppercase font-bold text-slate-500 mb-2">Etapa do Estágio</h4>
+            <p class="text-sm font-semibold text-slate-800">${s.stages}</p>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+            <h4 class="text-xs uppercase font-bold text-slate-500 mb-2">Quem Utiliza</h4>
+            <p class="text-sm font-semibold text-slate-800">${s.users}</p>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200/70">
+            <h4 class="text-xs uppercase font-bold text-slate-500 mb-2">Frequência</h4>
+            <p class="text-sm font-semibold text-slate-800">${s.frequency}</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-desktop text-blue-600"></i> Telas & Módulos Identificados
+            </h3>
+            <ul class="space-y-2 text-xs text-slate-600">
+              ${s.screens.map(sc => `<li class="flex items-start gap-2 bg-slate-50 p-2.5 rounded-lg border border-slate-100"><i class="fa-solid fa-chevron-right text-blue-500 mt-0.5"></i> <span>${sc}</span></li>`).join('')}
+            </ul>
+          </div>
+
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm mb-3 flex items-center gap-2">
+              <i class="fa-solid fa-bolt text-amber-500"></i> Ações & Operações da Equipe
+            </h3>
+            <ul class="space-y-2 text-xs text-slate-600">
+              ${s.actions.map(ac => `<li class="flex items-start gap-2 bg-slate-50 p-2.5 rounded-lg border border-slate-100"><i class="fa-solid fa-check text-emerald-500 mt-0.5"></i> <span>${ac}</span></li>`).join('')}
+            </ul>
+          </div>
+        </div>
+
+        <div class="pt-4 border-t border-slate-100">
+          <h3 class="font-bold text-indigo-700 text-sm mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles text-indigo-500"></i> Oportunidades com Agentes de IA (Start BSB)
+          </h3>
+          <ul class="space-y-2 text-xs text-slate-600">
+            ${s.startBsb.map(sb => `<li class="flex items-start gap-2 bg-indigo-50/50 p-2.5 rounded-lg border border-indigo-100"><i class="fa-solid fa-arrow-trend-up text-indigo-600 mt-0.5"></i> <span>${sb}</span></li>`).join('')}
+          </ul>
+        </div>
+      `;
+      document.getElementById('sys-detail-container').innerHTML = html;
+    }
+
+    function filterSystemDetail(key) {
+      document.getElementById('btn-sys-vagas').className = key === 'sistema-vagas-3' ? 'px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-sm' : 'px-4 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50';
+      document.getElementById('btn-sys-banco').className = key === 'banco-de-curriculos' ? 'px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white shadow-sm' : 'px-4 py-2 rounded-xl text-xs font-semibold bg-white border border-slate-200 text-slate-700 hover:bg-slate-50';
+      renderSystem(key);
+    }
+
+    function showSystem(key) {
+      switchTab('sistemas');
+      filterSystemDetail(key);
+    }
+
+    function switchTab(tab) {
+      ['dashboard', 'sistemas', 'pendencias'].forEach(t => {
+        document.getElementById(`content-${t}`).classList.add('hidden');
+        document.getElementById(`tab-${t}`).className = 'py-3 px-1 border-b-2 border-transparent text-slate-500 hover:text-slate-800 font-medium text-sm flex items-center gap-2';
+      });
+      document.getElementById(`content-${tab}`).classList.remove('hidden');
+      document.getElementById(`tab-${tab}`).className = 'py-3 px-1 border-b-2 border-blue-600 text-blue-600 font-semibold text-sm flex items-center gap-2';
+    }
+
+    renderSystem('sistema-vagas-3');
+  </script>
+</body>
+</html>
